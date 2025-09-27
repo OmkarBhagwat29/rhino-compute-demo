@@ -17,7 +17,7 @@ function Box() {
 
 const OWowScene = () => {
   return (
-    <div className="w-screen h-screen">
+    <div className="absolute w-full h-full">
       <Canvas
         camera={{
           position: [5, 10, 12],
