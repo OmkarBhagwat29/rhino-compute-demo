@@ -12,14 +12,17 @@
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
     "@react-three/postprocessing": "^3.0.4",
+    "lodash": "^4.17.21",
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "rhino3dm": "^8.17.0",
     "three": "^0.180.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/lodash": "^4.17.20",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
