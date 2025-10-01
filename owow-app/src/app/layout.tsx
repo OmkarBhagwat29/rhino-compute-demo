@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,27 +28,6 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* <!-- Import maps polyfill -->
-      <!-- Remove this when import maps will be widely supported --> */}
-        {/* Import maps polyfill */}
-
-        {/* <Script
-          src="https://unpkg.com/es-module-shims@1.10.0/dist/es-module-shims.js"
-          strategy="beforeInteractive"
-        /> */}
-
-        {/* Import map itself */}
-        {/* <Script id="importmap" type="importmap" strategy="beforeInteractive">
-          {`
-            {
-              "imports": {
-                "rhino3dm": "https://unpkg.com/rhino3dm@8.4.0/rhino3dm.module.min.js",
-                "rhinocompute": "https://www.unpkg.com/compute-rhino3d@0.13.0-beta/compute.rhino3d.module.js"
-              }
-            }
-          `}
-        </Script> */}
-
         {children}
       </body>
     </html>

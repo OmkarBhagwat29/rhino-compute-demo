@@ -2,6 +2,7 @@ import { BoxGeometry, Mesh } from "three";
 import * as WebIFC from "web-ifc";
 import { v4 as uuidv4 } from "uuid";
 import * as uuid from "uuid";
+// @ts-ignore
 import * as d64 from "d64";
 
 // Initialize IFC API
@@ -135,6 +136,7 @@ export const downloadIFC = (modelId: number, fileName: string) => {
   try {
     const ifcBytes = ifcapi.SaveModel(modelId);
     // Create a Blob from the data
+    // @ts-ignore
     const blob = new Blob([ifcBytes], { type: "application/octet-stream" });
 
     // Create a download link

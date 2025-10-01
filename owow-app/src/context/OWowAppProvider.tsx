@@ -7,6 +7,8 @@ import { IWallResult } from "@/props/IWallResult";
 import { createContext, FC, ReactNode, useContext, useState } from "react";
 
 interface OWowProps {
+  modelLoaded: boolean;
+  setModelLoaded: (loaded: boolean) => void;
   topFeatureBtn: IBtnProps;
   setTopFeatureBtn: (btn: IBtnProps) => void;
 
@@ -42,9 +44,12 @@ export const OWowAppProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const [dataViz, setDataViz] = useState<IDataVizProps>(getDefaultDatViz());
 
+  const [modelLoaded, setModelLoaded] = useState(false);
   return (
     <OWowAppContext.Provider
       value={{
+        modelLoaded,
+        setModelLoaded,
         dataViz,
         setDataViz,
         selElm,

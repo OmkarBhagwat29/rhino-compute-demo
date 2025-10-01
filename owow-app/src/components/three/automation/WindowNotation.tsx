@@ -42,7 +42,9 @@ const WindowNotation = () => {
         showX={false}
         position={[dParams.insert_B.x, dParams.insert_B.y, dParams.insert_B.z]}
         onMouseUp={(e) => {
-          const obj = e?.target.object;
+          // @ts-ignore
+          const obj = e?.target.object; // the controlled Three.js object
+          if (!obj) return;
           setWallParams({
             ...wallParams,
             insert_B: {
@@ -62,7 +64,9 @@ const WindowNotation = () => {
         showX={false}
         position={[dParams.insert_A.x, dParams.insert_A.y, dParams.insert_A.z]}
         onMouseUp={(e) => {
+          // @ts-ignore
           const obj = e?.target.object; // the controlled Three.js object
+          if (!obj) return;
           setWallParams({
             ...wallParams,
             insert_A: {

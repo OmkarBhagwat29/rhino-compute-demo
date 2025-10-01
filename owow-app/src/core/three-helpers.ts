@@ -1,5 +1,7 @@
+// @ts-nocheck
+
 import { loadRhino3dm } from "@/rhino/loadRhino3dm";
-import { RhinoModule } from "rhino3dm";
+
 import {
   BufferAttribute,
   BufferGeometry,
@@ -24,6 +26,7 @@ export async function rhinoToThreeMesh(
         const bufferGeom = new BufferGeometry();
 
         // Reconstruct BufferAttributes
+
         const posArray = new Float32Array(geom.data.attributes.position.array);
         bufferGeom.setAttribute("position", new BufferAttribute(posArray, 3));
 

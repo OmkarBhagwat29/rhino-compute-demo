@@ -1,6 +1,8 @@
+// @ts-nocheck
 import { useGLTF } from "@react-three/drei";
+import { Edges } from "@react-three/drei";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Box3,
   EdgesGeometry,
@@ -16,8 +18,10 @@ import { useThree } from "@react-three/fiber";
 
 const EdgeOverlay = ({ tolerance = 90 }) => {
   const { scene } = useThree();
+  const { modelLoaded } = useOWowApp();
 
-  useEffect(() => {
+  useMemo(() => {
+    if (!modelLoaded) return;
     scene.traverse((child) => {
       if ((child as Mesh).isMesh) {
         const mesh = child as Mesh;
@@ -34,7 +38,9 @@ const EdgeOverlay = ({ tolerance = 90 }) => {
         }
       }
     });
-  }, [scene, tolerance]);
+
+    //console.log("edging...");
+  }, [modelLoaded]);
 
   return null;
 };
@@ -43,7 +49,7 @@ const LoadModel = () => {
   const { scene } = useGLTF("/models/test.gltf");
   const modelRef = useRef<Scene | null>(null);
   const [center, setCenter] = useState(new Vector3(0, 0, 0));
-  const { topFeatureBtn, setSelElm, selElm } = useOWowApp();
+  const { topFeatureBtn, setSelElm, selElm, setModelLoaded } = useOWowApp();
   useEffect(() => {
     //const ct = new OrbitControls(camera, gl.domElement);
 
@@ -57,6 +63,8 @@ const LoadModel = () => {
       center.y = box.min.y; // Set y to the bottom of the model
 
       modelRef.current.position.sub(center);
+
+      setModelLoaded(true);
     }
   }, []);
 
@@ -64,12 +72,12 @@ const LoadModel = () => {
     if (!selElm) return;
 
     // Store original emissive color
+    //console.log(selElm);
     const original = selElm.object.material.emissive?.clone();
 
     // Apply highlight
     selElm.object.material.emissive?.set(0xffcc00);
 
-    // Cleanup: restore emissive on deselect
     return () => {
       if (selElm.object.material && original) {
         selElm.object.material.emissive.copy(original);
@@ -79,7 +87,7 @@ const LoadModel = () => {
 
   // Listen for Escape key
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: any) => {
       if (e.key === "Escape") {
         if (selElm?.object.material?.emissive) {
           selElm.object.material.emissive.set(0x000000); // reset emissive
@@ -101,7 +109,7 @@ const LoadModel = () => {
           <primitive
             ref={modelRef}
             object={scene}
-            onClick={(e) => {
+            onClick={(e: any) => {
               e.stopPropagation();
 
               if (topFeatureBtn.name !== "Data Visualization") {
@@ -127,7 +135,12 @@ const LoadModel = () => {
               }
 
               if (foundUserData) {
-                setSelElm({ object: e.object, props: foundUserData });
+                if (e.object.isLine) {
+                }
+                setSelElm({
+                  object: e.object.isLine ? e.object.parent : e.object,
+                  props: foundUserData,
+                });
               } else {
                 console.log("No userData found");
                 setSelElm(null);

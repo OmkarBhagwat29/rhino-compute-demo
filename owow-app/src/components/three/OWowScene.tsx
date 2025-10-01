@@ -1,4 +1,4 @@
-import { Bounds, Edges, OrbitControls } from "@react-three/drei";
+import { Bounds, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { useEffect } from "react";
 import LoadModel from "./LoadModel";
@@ -8,34 +8,26 @@ import { MOUSE } from "three";
 import ExportIFC from "./IO/ExportIFC";
 import DataVisThree from "./data-vis/DataVisThree";
 
-function Box() {
-  return (
-    <mesh>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="pink" />
-      {/* Draw the edges */}
-      <Edges color="black" />
-    </mesh>
-  );
-}
-
 const OWowScene = () => {
   useEffect(() => {
     (async () => {
-      const rhino = await loadRhino3dm();
+      await loadRhino3dm();
       //console.log(rhino);
     })();
   }, []);
 
   return (
     <div className="absolute w-full h-full">
-      <Canvas shadows camera={{ position: [2, 5, 10], fov: 50 }}>
+      <Canvas
+        shadows
+        camera={{ position: [2, 5, 10], fov: 50, near: 1, far: 100 }}
+      >
         <OrbitControls
           target={[0, 0, 0]}
           enableDamping
           dampingFactor={0.05}
           minDistance={2}
-          maxDistance={500}
+          maxDistance={100}
           mouseButtons={{
             MIDDLE: MOUSE.DOLLY,
             RIGHT: MOUSE.ROTATE, // Right-click rotates (orbit)

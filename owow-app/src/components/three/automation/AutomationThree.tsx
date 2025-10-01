@@ -21,6 +21,8 @@ const AutomationThree = () => {
           // console.log(child.children[0]);
         } else if (child.name.includes("OW_Window")) {
           child.visible = false;
+          child.children.map((c) => (c.visible = false));
+          // console.log(child);
         } else if (
           child.name === "FamilyInstance_Generic_Models_PTHP_<44037198_PTHP<" ||
           child.name === "FamilyInstance_Generic_Models_PTHP_<45248326_PTHP<"
@@ -48,6 +50,7 @@ const AutomationThree = () => {
         });
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [topFeatureBtn, scene]);
 
   useEffect(() => {
@@ -77,7 +80,7 @@ const AutomationThree = () => {
               material={wallResult.wall.material}
             >
               {/* Draw edges */}
-              <Edges color="black" />
+              <Edges color="black" threshold={90} />
             </mesh>
 
             {wallResult.studs.map((stud) => {
@@ -88,7 +91,7 @@ const AutomationThree = () => {
                   geometry={stud.geometry}
                   material={stud.material}
                 >
-                  <Edges color="black" />
+                  <Edges color="black" threshold={90} />
                 </mesh>
               );
             })}

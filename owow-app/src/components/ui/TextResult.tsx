@@ -34,7 +34,7 @@ const TextResult = () => {
                 </label>
 
                 {selElm ? (
-                  <div className="max-h-96 overflow-y-auto border rounded p-2 bg-white text-sm">
+                  <div className="max-h-96 flex-wrap overflow-y-auto border rounded p-2 bg-white text-sm">
                     {/* Basic info */}
                     <div className="mb-2">
                       <p>

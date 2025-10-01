@@ -1,7 +1,7 @@
 import { useOWowApp } from "@/context/OWowAppProvider";
 import { IDataCategory } from "@/props/IDataVisProps";
 import { useThree } from "@react-three/fiber";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 const DataVisThree = () => {
   const { dataViz, setDataViz, topFeatureBtn } = useOWowApp(); // assuming your context has setter
@@ -14,7 +14,7 @@ const DataVisThree = () => {
     ) {
       return;
     }
-    console.log("category length", dataViz.categories[0].objects.length);
+    //console.log("category length", dataViz.categories[0].objects.length);
     // deep clone categories so we don’t mutate context directly
     const categories: IDataCategory[] = dataViz.categories.map((c) => ({
       ...c,
@@ -36,7 +36,7 @@ const DataVisThree = () => {
     setDataViz({ hideOnSelect: false, categories: categories });
 
     // console.log(categories);
-  }, [topFeatureBtn, dataViz.categories, scene, setDataViz]);
+  }, [topFeatureBtn, dataViz.categories, setDataViz]);
 
   return null;
 };
