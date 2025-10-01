@@ -21,7 +21,7 @@ const AutomationThree = () => {
           // console.log(child.children[0]);
         } else if (child.name.includes("OW_Window")) {
           child.visible = false;
-          child.children.map((c) => (c.visible = false));
+
           // console.log(child);
         } else if (
           child.name === "FamilyInstance_Generic_Models_PTHP_<44037198_PTHP<" ||

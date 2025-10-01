@@ -15,15 +15,15 @@ const DataVis = () => {
   };
 
   return (
-    <div className="w-72 h-72 bg-gray-300/75  rounded-md overflow-auto border">
+    <div className="w-72 h-80 bg-gray-300/75  rounded-md overflow-auto border">
       <div className="text-black p-2 px-4">
         {dataViz.categories.map((ct) => {
           return (
             <div
-              className="cursor-pointer select-none flex flex-col gap-1"
+              className="cursor-pointer select-none flex flex-col gap-1 hover:bg-amber-300/70 p-1 rounded-sm"
               key={ct.name}
             >
-              <div className="flex flex-row gap-2">
+              <div className="flex flex-row gap-2 ">
                 {ct.hide ? (
                   <EyeOff size={16} onClick={() => onEyeClick(ct)} />
                 ) : (
