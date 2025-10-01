@@ -1,9 +1,8 @@
 import React from "react";
 import { Box, Text, TransformControls } from "@react-three/drei";
 import { useOWowApp } from "@/context/OWowAppProvider";
-import { getDefaultWallAutomationParams } from "@/core/wall-automation-helper";
 
-const dParams = getDefaultWallAutomationParams();
+//const dParams = getDefaultWallAutomationParams();
 const WindowNotation = () => {
   const { wallParams, setWallParams } = useOWowApp();
   return (
@@ -40,7 +39,11 @@ const WindowNotation = () => {
         size={0.5}
         mode="translate"
         showX={false}
-        position={[dParams.insert_B.x, dParams.insert_B.y, dParams.insert_B.z]}
+        position={[
+          wallParams.insert_B.x,
+          wallParams.insert_B.y,
+          wallParams.insert_B.z,
+        ]}
         onMouseUp={(e) => {
           // @ts-ignore
           const obj = e?.target.object; // the controlled Three.js object
@@ -62,7 +65,11 @@ const WindowNotation = () => {
         size={0.5}
         mode="translate"
         showX={false}
-        position={[dParams.insert_A.x, dParams.insert_A.y, dParams.insert_A.z]}
+        position={[
+          wallParams.insert_A.x,
+          wallParams.insert_A.y,
+          wallParams.insert_A.z,
+        ]}
         onMouseUp={(e) => {
           // @ts-ignore
           const obj = e?.target.object; // the controlled Three.js object
