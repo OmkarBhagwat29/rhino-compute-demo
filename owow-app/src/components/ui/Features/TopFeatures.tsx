@@ -13,7 +13,7 @@ const TopFeatures = () => {
 
   return (
     <div className="w-full h-8 absolute top-2 z-50">
-      <div className="flex flex-row justify-center items-center h-full gap-4">
+      <div className="flex flex-row justify-center items-center h-full gap-4 select-none">
         {buttons.map((button, index) => (
           <div
             key={index}

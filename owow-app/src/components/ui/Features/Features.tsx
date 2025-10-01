@@ -6,7 +6,7 @@ const Features = () => {
   return (
     <>
       <TopFeatures />
-      <BottomFeatures />
+      {/* <BottomFeatures /> */}
     </>
   );
 };

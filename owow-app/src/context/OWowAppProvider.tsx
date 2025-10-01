@@ -1,24 +1,26 @@
 import { getDefaultWallAutomationParams } from "@/core/wall-automation-helper";
 import { IBtnProps } from "@/props/IBtnProps";
+import { IClickedElement } from "@/props/IClickedElement";
+import { getDefaultDatViz, IDataVizProps } from "@/props/IDataVisProps";
 import { IWallProps } from "@/props/IWallProps";
 import { IWallResult } from "@/props/IWallResult";
 import { createContext, FC, ReactNode, useContext, useState } from "react";
-import { Mesh } from "three";
 
 interface OWowProps {
   topFeatureBtn: IBtnProps;
   setTopFeatureBtn: (btn: IBtnProps) => void;
-  // wallMesh: Mesh | null;
-  // setWallMesh: (wallMesh: Mesh | null) => void;
 
-  // studs: Mesh[];
-  // setStuds: (studs: Mesh[]) => void;
+  selElm: IClickedElement | null;
+  setSelElm: (e: IClickedElement | null) => void;
 
   wallResult: IWallResult | null;
   setWallResult: (result: IWallResult | null) => void;
 
   wallParams: IWallProps;
   setWallParams: (params: IWallProps) => void;
+
+  dataViz: IDataVizProps;
+  setDataViz: (viz: IDataVizProps) => void;
 }
 
 export const OWowAppContext = createContext<OWowProps | undefined>(undefined);
@@ -36,9 +38,17 @@ export const OWowAppProvider: FC<{ children: ReactNode }> = ({ children }) => {
     getDefaultWallAutomationParams()
   );
 
+  const [selElm, setSelElm] = useState<IClickedElement | null>(null);
+
+  const [dataViz, setDataViz] = useState<IDataVizProps>(getDefaultDatViz());
+
   return (
     <OWowAppContext.Provider
       value={{
+        dataViz,
+        setDataViz,
+        selElm,
+        setSelElm,
         wallResult,
         setWallResult,
         topFeatureBtn,

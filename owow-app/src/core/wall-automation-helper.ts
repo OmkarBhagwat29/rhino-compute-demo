@@ -1,7 +1,8 @@
 import { IWallProps } from "@/props/IWallProps";
-import { Box3, Mesh, Vector3 } from "three";
+import { Box3, Vector3 } from "three";
 import { rhinoToThreeMesh } from "./three-helpers";
 import { IWallResult } from "@/props/IWallResult";
+import { roundUp } from "./math/math";
 
 export function getDefaultWallAutomationParams(): IWallProps {
   return {
@@ -35,11 +36,14 @@ export async function callWallAutomation(
       body: JSON.stringify(params),
     });
 
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+    if (!res.ok) {
+      return null;
+      //throw new Error(`HTTP error! status: ${res.status}`);
+    }
 
     const result = await res.json();
-
-    const { wall, studs } = result;
+    // console.log("api result", result);
+    const { wall, studs, wallVolume, studsLength, studsCount } = result;
 
     const wallMesh = await rhinoToThreeMesh(wall, "yellow", true, 0.25);
 
@@ -58,16 +62,35 @@ export async function callWallAutomation(
     wallMesh.geometry.center();
 
     //now set its position
-    wallMesh.position.set(center.x, center.y, center.z);
+    wallMesh.position.copy(center);
 
     const studMeshes = await Promise.all(
       studs.map(async (stud: any) => {
         const studMesh = await rhinoToThreeMesh(stud, "red", false);
+
+        if (studMesh !== null) {
+          studMesh.geometry.rotateX((-90 * Math.PI) / 180);
+
+          box.setFromObject(studMesh);
+          box.getCenter(center);
+
+          studMesh.geometry.center();
+          studMesh.position.copy(center);
+
+          //console.log(studMesh.position);
+        }
+
         return studMesh;
       })
     );
 
-    return { wall: wallMesh, studs: studMeshes };
+    return {
+      wall: wallMesh,
+      studs: studMeshes,
+      wallVolume: roundUp(wallVolume, 2),
+      studsCount: Math.round(studsCount),
+      studsLength,
+    };
   } catch (ex) {
     throw ex;
   }

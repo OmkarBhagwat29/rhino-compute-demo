@@ -1,19 +1,54 @@
-import { OrbitControls, OrthographicCamera, useGLTF } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 
 import { useEffect, useRef, useState } from "react";
-import { Box3, Scene, Vector3 } from "three";
+import {
+  Box3,
+  EdgesGeometry,
+  LineBasicMaterial,
+  LineSegments,
+  Mesh,
+  Scene,
+  Vector3,
+} from "three";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
+import { useOWowApp } from "@/context/OWowAppProvider";
+import { useThree } from "@react-three/fiber";
+
+const EdgeOverlay = ({ tolerance = 90 }) => {
+  const { scene } = useThree();
+
+  useEffect(() => {
+    scene.traverse((child) => {
+      if ((child as Mesh).isMesh) {
+        const mesh = child as Mesh;
+
+        if (mesh.geometry) {
+          const edges = new EdgesGeometry(mesh.geometry, tolerance);
+          const line = new LineSegments(
+            edges,
+            new LineBasicMaterial({ color: 0x000000 }) // edge color
+          );
+
+          // attach edges overlay
+          mesh.add(line);
+        }
+      }
+    });
+  }, [scene, tolerance]);
+
+  return null;
+};
 
 const LoadModel = () => {
   const { scene } = useGLTF("/models/test.gltf");
   const modelRef = useRef<Scene | null>(null);
   const [center, setCenter] = useState(new Vector3(0, 0, 0));
-
+  const { topFeatureBtn, setSelElm, selElm } = useOWowApp();
   useEffect(() => {
     //const ct = new OrbitControls(camera, gl.domElement);
 
     if (modelRef.current) {
-      console.log("Model loaded:", modelRef.current);
+      //console.log("Model loaded:", modelRef.current);
       // Compute bounding box
       const box = new Box3().setFromObject(modelRef.current);
       const center = new Vector3();
@@ -21,28 +56,97 @@ const LoadModel = () => {
 
       center.y = box.min.y; // Set y to the bottom of the model
 
-      //setCenter(center);
-
-      modelRef.current.position.sub(center); // Center the model
-      //modelRef.current.position.set(0, 0, 0.1);
+      modelRef.current.position.sub(center);
     }
   }, []);
+
+  useEffect(() => {
+    if (!selElm) return;
+
+    // Store original emissive color
+    const original = selElm.object.material.emissive?.clone();
+
+    // Apply highlight
+    selElm.object.material.emissive?.set(0xffcc00);
+
+    // Cleanup: restore emissive on deselect
+    return () => {
+      if (selElm.object.material && original) {
+        selElm.object.material.emissive.copy(original);
+      }
+    };
+  }, [selElm]);
+
+  // Listen for Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        if (selElm?.object.material?.emissive) {
+          selElm.object.material.emissive.set(0x000000); // reset emissive
+        }
+        setSelElm(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selElm, setSelElm]);
 
   return (
     <>
       {scene && (
         <>
-          <primitive ref={modelRef} object={scene} />
+          <primitive
+            ref={modelRef}
+            object={scene}
+            onClick={(e) => {
+              e.stopPropagation();
 
+              if (topFeatureBtn.name !== "Data Visualization") {
+                setSelElm(null);
+                return;
+              }
+
+              let target = e.object;
+              let foundUserData = null;
+
+              // Traverse up until we find userData with actual keys
+              let rec = 0;
+              while (target && rec < 5) {
+                if (
+                  target.userData &&
+                  Object.keys(target.userData).length > 0
+                ) {
+                  foundUserData = target.userData;
+                  break;
+                }
+                target = target.parent;
+                rec++;
+              }
+
+              if (foundUserData) {
+                setSelElm({ object: e.object, props: foundUserData });
+              } else {
+                console.log("No userData found");
+                setSelElm(null);
+              }
+
+              // console.log("Clicked object:", e.object);
+            }}
+          />
+
+          <EdgeOverlay />
           <gridHelper
             args={[10, 10]}
             position={[center.x, center.y, center.z]}
           />
           <axesHelper args={[5]} position={[center.x, center.y, center.z]} />
 
-          <ambientLight intensity={3} />
+          <ambientLight intensity={2.75} />
           <directionalLight
-            intensity={3}
+            intensity={1.5}
             position={center}
             castShadow
             shadow-mapSize-width={2048}
@@ -58,7 +162,7 @@ const LoadModel = () => {
           />
 
           <EffectComposer>
-            <Bloom intensity={0.3} luminanceThreshold={0.8} />
+            <Bloom intensity={0.1} luminanceThreshold={0.2} />
           </EffectComposer>
         </>
       )}

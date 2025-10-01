@@ -1,15 +1,12 @@
-import {
-  Bounds,
-  Edges,
-  OrbitControls,
-  OrthographicCamera,
-} from "@react-three/drei";
+import { Bounds, Edges, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { useEffect } from "react";
 import LoadModel from "./LoadModel";
 import AutomationThree from "./automation/AutomationThree";
 import { loadRhino3dm } from "@/rhino/loadRhino3dm";
 import { MOUSE } from "three";
+import ExportIFC from "./IO/ExportIFC";
+import DataVisThree from "./data-vis/DataVisThree";
 
 function Box() {
   return (
@@ -26,7 +23,7 @@ const OWowScene = () => {
   useEffect(() => {
     (async () => {
       const rhino = await loadRhino3dm();
-      console.log(rhino);
+      //console.log(rhino);
     })();
   }, []);
 
@@ -58,6 +55,8 @@ const OWowScene = () => {
         </Bounds>
 
         <AutomationThree />
+        <DataVisThree />
+        <ExportIFC />
       </Canvas>
     </div>
   );
