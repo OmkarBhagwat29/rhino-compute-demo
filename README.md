@@ -2,7 +2,7 @@
 
 > **Prototype** — a proof-of-concept web app exploring parametric wall framing via Rhino Compute and interactive BIM visualization in the browser.
 
-A full-stack prototype that connects a Rhino Compute backend to a Next.js frontend for real-time parametric wall generation, 3D visualization, and IFC export.
+A full-stack prototype that connects a Rhino Compute backend to a Next.js frontend for real-time parametric wall generation and 3D visualization.
 
 ## What it does
 
@@ -16,7 +16,7 @@ A full-stack prototype that connects a Rhino Compute backend to a Next.js fronte
 |---|---|
 | Frontend | Next.js 15 · React 19 · TypeScript · Tailwind CSS |
 | 3D | Three.js · @react-three/fiber · @react-three/drei |
-| Geometry | rhino3dm (JS) · web-ifc |
+| Geometry | rhino3dm (JS) |
 | Backend | ASP.NET Core 8 (Minimal API) |
 | Compute | Rhino.Compute · Grasshopper (`automation.gh`) |
 
@@ -92,13 +92,12 @@ npm run dev
 └── frontend/
     ├── src/
     │   ├── app/                  # Next.js app router
-    │   ├── components/three/     # Three.js scene, automation, IFC export
+    │   ├── components/three/     # Three.js scene and automation
     │   ├── components/ui/        # Panels, feature tabs, parameter inputs
     │   ├── context/              # Global app state provider
-    │   └── core/                 # wall-automation-helper, three-helpers, ifc-export
+    │   └── core/                 # wall-automation-helper, three-helpers
     └── public/
         ├── models/test.gltf
-        └── web-ifc.wasm
 ```
 
 ## API
