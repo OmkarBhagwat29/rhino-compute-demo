@@ -10,17 +10,17 @@ A full-stack prototype that connects a Rhino Compute backend to a Next.js fronte
 
 - **Wall Automation** — configure wall parameters (window sizes, positions, stud gap) via sliders; the backend evaluates a Grasshopper definition via Rhino Compute and returns the computed wall mesh and studs in real time
 - **3D Visualization** — interactive Three.js scene with orbit controls, edge overlays, and bloom post-processing
-- **Data Visualization** — load a GLTF model, inspect element properties by clicking objects, toggle category visibility.
+- **Data Visualization** — load a GLTF model, inspect element properties by clicking objects, toggle category visibility
 
 ## Stack
 
-| Layer | Tech |
-|---|---|
+| Layer    | Tech                                              |
+| -------- | ------------------------------------------------- |
 | Frontend | Next.js 15 · React 19 · TypeScript · Tailwind CSS |
-| 3D | Three.js · @react-three/fiber · @react-three/drei |
-| Geometry | rhino3dm (JS) |
-| Backend | ASP.NET Core 8 (Minimal API) |
-| Compute | Rhino.Compute · Grasshopper (`automation.gh`) |
+| 3D       | Three.js · @react-three/fiber · @react-three/drei |
+| Geometry | rhino3dm (JS)                                     |
+| Backend  | ASP.NET Core 8 (Minimal API)                      |
+| Compute  | Rhino.Compute · Grasshopper (`automation.gh`)     |
 
 ## Prerequisites
 
