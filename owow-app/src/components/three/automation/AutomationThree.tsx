@@ -80,7 +80,7 @@ const AutomationThree = () => {
               material={wallResult.wall.material}
             >
               {/* Draw edges */}
-              <Edges color="black" threshold={90} />
+              <Edges color="black" threshold={10} />
             </mesh>
 
             {wallResult.studs.map((stud) => {
@@ -91,7 +91,7 @@ const AutomationThree = () => {
                   geometry={stud.geometry}
                   material={stud.material}
                 >
-                  <Edges color="black" threshold={90} />
+                  <Edges color="black" threshold={10} />
                 </mesh>
               );
             })}
