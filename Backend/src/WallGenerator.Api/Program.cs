@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using Owow.Api.DTOs;
+using WallGenerator.Api.DTOs;
 using Rhino.Compute;
 using Rhino.Geometry;
 
@@ -12,7 +12,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowNextJs",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000","https://map-testing-rho.vercel.app") // your Next.js front-end
+            policy.WithOrigins("http://localhost:3000") // your front-end
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });

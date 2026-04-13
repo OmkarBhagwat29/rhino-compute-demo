@@ -10,6 +10,9 @@ namespace Rhino.Compute
 {
     public static class ComputeServer
     {
+        // IMPORTANT: This must match the port on which compute.geometry is running.
+        // Default compute.geometry port is 6500. Change this value if your server runs on a different port.
+        // See: https://github.com/mcneel/compute.rhino3d/tree/9.x/src/compute.geometry
         public static string WebAddress { get; set; } = "http://localhost:6500";
         public static string AuthToken { get; set; }
         public static string ApiKey { get; set; }

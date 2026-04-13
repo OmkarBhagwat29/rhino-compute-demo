@@ -25,9 +25,10 @@ export function getDefaultWallAutomationParams(): IWallProps {
 }
 
 export async function callWallAutomation(
-  params: IWallProps
+  params: IWallProps,
 ): Promise<IWallResult | null> {
   try {
+
     const res = await fetch("http://localhost:5166/generate-wall", {
       method: "POST",
       headers: {
@@ -37,6 +38,7 @@ export async function callWallAutomation(
     });
 
     if (!res.ok) {
+      console.error("HTTP error! status:", res.status);
       return null;
       //throw new Error(`HTTP error! status: ${res.status}`);
     }
@@ -81,7 +83,7 @@ export async function callWallAutomation(
         }
 
         return studMesh;
-      })
+      }),
     );
 
     return {

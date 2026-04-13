@@ -1,7 +1,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace Owow.Api.DTOs;
+namespace WallGenerator.Api.DTOs;
 
 public class WallDto
 {

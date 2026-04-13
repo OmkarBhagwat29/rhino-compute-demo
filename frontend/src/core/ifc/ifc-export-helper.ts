@@ -52,8 +52,8 @@ export const writeIfc = async (
   const app = new WebIFC.IFC4.IfcApplication(
     org,
     new WebIFC.IFC4.IfcLabel("0.0.1"),
-    new WebIFC.IFC4.IfcLabel("owow-app"),
-    new WebIFC.IFC4.IfcIdentifier("owow-bim")
+    new WebIFC.IFC4.IfcLabel("parametric-wall-generator"),
+    new WebIFC.IFC4.IfcIdentifier("parametric-bim")
   );
   app.expressID = ++expressId;
 
