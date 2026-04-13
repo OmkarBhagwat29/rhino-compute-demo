@@ -1,5 +1,7 @@
 # Parametric Wall Generator
 
+![Demo](docs/rhino-compute-wall-slicer.gif)
+
 > **Prototype** — a proof-of-concept web app exploring parametric wall framing via Rhino Compute and interactive BIM visualization in the browser.
 
 A full-stack prototype that connects a Rhino Compute backend to a Next.js frontend for real-time parametric wall generation and 3D visualization.
